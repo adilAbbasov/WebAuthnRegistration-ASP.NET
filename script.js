@@ -12,18 +12,20 @@ document.addEventListener('DOMContentLoaded', function ()
         document.getElementById('loginForm').style.display = 'none';
     });
 
-    document.getElementById('loginForm').addEventListener('submit', function (event)
+    document.getElementById('loginForm').addEventListener('submit', async function (event)
     {
         event.preventDefault();
 
-
-
+        var cridential = await authenticateWithBiometrics();
         const formData = new FormData(this);
         const jsonObject = {};
+
         formData.forEach((value, key) =>
         {
             jsonObject[key] = value;
         });
+
+        jsonObject["fingerprintKey"] = cridential.id;
         const jsonData = JSON.stringify(jsonObject);
 
         fetch('https://localhost:7244/controller/login', {
