@@ -2718,11 +2718,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lenovo\\source\\repos\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET.csproj",
+      "projectUniqueName": "C:\\Users\\Lenovo\\Documents\\GitHub\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET.csproj",
       "projectName": "WebAuthnRegistration-ASP.NET",
-      "projectPath": "C:\\Users\\Lenovo\\source\\repos\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET.csproj",
+      "projectPath": "C:\\Users\\Lenovo\\Documents\\GitHub\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lenovo\\source\\repos\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET\\obj\\",
+      "outputPath": "C:\\Users\\Lenovo\\Documents\\GitHub\\WebAuthnRegistration-ASP.NET\\WebAuthnRegistration-ASP.NET\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
