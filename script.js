@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function ()
     {
         event.preventDefault();
 
-        var cridential = await authenticateWithBiometrics();
+        var cridential = await getCredentials();
         const formData = new FormData(this);
         const jsonObject = {};
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function ()
     {
         event.preventDefault();
 
-        var cridential = await authenticateWithBiometrics();
+        var cridential = await createCredentials();
         const formData = new FormData(this);
         const jsonObject = {};
 
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function ()
         document.getElementById('email').value = '';
     });
 
-    async function authenticateWithBiometrics()
+    async function createCredentials()
     {
         return new Promise((resolve, reject) =>
         {
@@ -126,6 +126,36 @@ document.addEventListener('DOMContentLoaded', function ()
             }
         });
     }
+
+    async function getCredentials() {
+        return new Promise((resolve, reject) => {
+            try {
+                navigator.credentials.get({
+                    publicKey: {
+                        challenge: Uint8Array.from("some-random-challenge"),
+                        rpId: "example.com",
+                        allowCredentials: [
+                            {
+                                type: 'public-key',
+                                id: Uint8Array.from("some-credential-id"),
+                            }
+                        ]
+                    }
+                }).then(credential => {
+                    if (credential) {
+                        resolve(credential);
+                    } else {
+                        reject("No credential found");
+                    }
+                }).catch(error => {
+                    reject(error);
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+    
 });
 
 
