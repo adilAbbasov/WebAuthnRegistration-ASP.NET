@@ -151,8 +151,9 @@ document.addEventListener('DOMContentLoaded', function ()
                             id: Uint8Array.from(
                                 "UZSL85T9AFC", c => c.charCodeAt(0)),
                             type: 'public-key',
-                            // transports: ['usb', 'ble', 'nfc'],
+                            transports: ['usb', 'ble', 'nfc', 'internal'],
                         }],
+                        userVerification: 'required',
                         timeout: 60000,
                     }
                 }).then(credential =>
