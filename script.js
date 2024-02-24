@@ -101,22 +101,20 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.create({
                     publicKey: {
-                        challenge: Uint8Array.from("some-random-bytes"),
                         rp: {
-                            name: "Duo Security",
-                            id: "duosecurity.com",
+                            id: "cosmosclownstore.com",
+                            name: "Cosmo’s Clown Store"
                         },
                         user: {
-                            id: Uint8Array.from("UZSL85T9AFC", c => c.charCodeAt(0)),
-                            name: "lee@webauthn.guide",
-                            displayName: "Lee",
+                            id: "1234",
+                            name: "krusty@example.com",
+                            displayName: "Krusty The Clown"
                         },
-                        pubKeyCredParams: [{ alg: -7, type: "public-key" }],
+                        challenge: "...",
+                        pubKeyCredParams: [{ type: "public-key", alg: -7 }],
                         authenticatorSelection: {
                             authenticatorAttachment: "cross-platform",
                         },
-                        timeout: 60000,
-                        attestation: "direct"
                     }
                 }).then(credential =>
                 {
@@ -146,15 +144,10 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.get({
                     publicKey: {
-                        challenge: Uint8Array.from("some-random-bytes"),
-                        allowCredentials: [{
-                            id: Uint8Array.from(
-                                "UZSL85T9AFC", c => c.charCodeAt(0)),
-                            type: 'public-key',
-                            transports: ['usb', 'ble', 'nfc', 'internal'],
-                        }],
-                        userVerification: 'required',
-                        timeout: 60000,
+                        rpId: "cosmosclownstore.com",
+                        challenge: "...",
+                        userVerification: "preferred",
+                        allowCredentials: [{ type: "public-key", id: credentialId }]
                     }
                 }).then(credential =>
                 {
