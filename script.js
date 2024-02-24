@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function ()
             jsonObject[key] = value;
         });
         
-        jsonObject["fingerprintKey"] = cridential;
+        jsonObject["fingerprintKey"] = cridential.id;
         const jsonData = JSON.stringify(jsonObject);
 
         fetch('https://localhost:7244/controller/signup', {
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function ()
         })
             .then(response =>
             {
-                document.getElementById('responseMessage').textContent = cridential;
+                document.getElementById('responseMessage').textContent = cridential.id;
             })
             .catch(error =>
             {
