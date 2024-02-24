@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function ()
         {
             jsonObject[key] = value;
         });
-        
+
         jsonObject["fingerprintKey"] = cridential.id;
         const jsonData = JSON.stringify(jsonObject);
 
@@ -101,11 +101,24 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.create({
                     publicKey: {
-                        challenge: Uint8Array.from("some-random-bytes"),
-                        rp: { name: "Example Corp" },
-                        user: { id: Uint8Array.from("some-user-id"), name: "user@example.com", displayName: "User" },
-                        pubKeyCredParams: [{ type: "public-key", alg: -7 }],
-                        timeout: 60000
+                        challenge: Uint8Array.from(
+                            randomStringFromServer, c => c.charCodeAt(0)),
+                        rp: {
+                            name: "Duo Security",
+                            id: "duosecurity.com",
+                        },
+                        user: {
+                            id: Uint8Array.from(
+                                "UZSL85T9AFC", c => c.charCodeAt(0)),
+                            name: "lee@webauthn.guide",
+                            displayName: "Lee",
+                        },
+                        pubKeyCredParams: [{alg: -7, type: "public-key"}],
+                        authenticatorSelection: {
+                            authenticatorAttachment: "cross-platform",
+                        },
+                        timeout: 60000,
+                        attestation: "direct"
                     }
                 }).then(credential =>
                 {
@@ -127,35 +140,44 @@ document.addEventListener('DOMContentLoaded', function ()
         });
     }
 
-    async function getCredentials() {
-        return new Promise((resolve, reject) => {
-            try {
+    async function getCredentials()
+    {
+        return new Promise((resolve, reject) =>
+        {
+            try
+            {
                 navigator.credentials.get({
                     publicKey: {
-                        challenge: Uint8Array.from("some-random-challenge"),
-                        rpId: "example.com",
-                        allowCredentials: [
-                            {
-                                type: 'public-key',
-                                id: Uint8Array.from("some-credential-id"),
-                            }
-                        ]
+                        challenge: Uint8Array.from(
+                            randomStringFromServer, c => c.charCodeAt(0)),
+                        allowCredentials: [{
+                            id: Uint8Array.from(
+                                credentialId, c => c.charCodeAt(0)),
+                            type: 'public-key',
+                            transports: ['usb', 'ble', 'nfc'],
+                        }],
+                        timeout: 60000,
                     }
-                }).then(credential => {
-                    if (credential) {
+                }).then(credential =>
+                {
+                    if (credential)
+                    {
                         resolve(credential);
-                    } else {
+                    } else
+                    {
                         reject("No credential found");
                     }
-                }).catch(error => {
+                }).catch(error =>
+                {
                     reject(error);
                 });
-            } catch (error) {
+            } catch (error)
+            {
                 reject(error);
             }
         });
     }
-    
+
 });
 
 
