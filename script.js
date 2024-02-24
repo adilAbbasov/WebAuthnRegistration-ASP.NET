@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function ()
                             name: "krusty@example.com",
                             displayName: "Krusty The Clown"
                         },
-                        challenge: "...",
+                        challenge: Uint8Array.from("some-random-bytes"),
                         pubKeyCredParams: [{ type: "public-key", alg: -7 }],
                         authenticatorSelection: {
                             authenticatorAttachment: "cross-platform",
@@ -142,10 +142,12 @@ document.addEventListener('DOMContentLoaded', function ()
         {
             try
             {
+                const credentialId = "aaaaaaaaaaaaaaaaaa";
+
                 navigator.credentials.get({
                     publicKey: {
                         rpId: "cosmosclownstore.com",
-                        challenge: "...",
+                        challenge: Uint8Array.from("some-random-bytes"),
                         userVerification: "preferred",
                         allowCredentials: [{ type: "public-key", id: credentialId }]
                     }
