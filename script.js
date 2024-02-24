@@ -101,19 +101,17 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.create({
                     publicKey: {
-                        challenge: Uint8Array.from(
-                            randomStringFromServer, c => c.charCodeAt(0)),
+                        challenge: Uint8Array.from("some-random-bytes"),
                         rp: {
                             name: "Duo Security",
                             id: "duosecurity.com",
                         },
                         user: {
-                            id: Uint8Array.from(
-                                "UZSL85T9AFC", c => c.charCodeAt(0)),
+                            id: Uint8Array.from("UZSL85T9AFC", c => c.charCodeAt(0)),
                             name: "lee@webauthn.guide",
                             displayName: "Lee",
                         },
-                        pubKeyCredParams: [{alg: -7, type: "public-key"}],
+                        pubKeyCredParams: [{ alg: -7, type: "public-key" }],
                         authenticatorSelection: {
                             authenticatorAttachment: "cross-platform",
                         },
@@ -148,11 +146,10 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.get({
                     publicKey: {
-                        challenge: Uint8Array.from(
-                            randomStringFromServer, c => c.charCodeAt(0)),
+                        challenge: Uint8Array.from("some-random-bytes"),
                         allowCredentials: [{
                             id: Uint8Array.from(
-                                credentialId, c => c.charCodeAt(0)),
+                                "UZSL85T9AFC", c => c.charCodeAt(0)),
                             type: 'public-key',
                             transports: ['usb', 'ble', 'nfc'],
                         }],
