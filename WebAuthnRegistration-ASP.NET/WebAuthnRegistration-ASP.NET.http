@@ -1,0 +1,6 @@
+@WebAuthnRegistration_ASP.NET_HostAddress = http://localhost:5147
+
+GET {{WebAuthnRegistration_ASP.NET_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

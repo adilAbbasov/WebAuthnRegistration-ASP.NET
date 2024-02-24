@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "to3fnK5r4mSOWSZgEHxGbGfT/FSZKVakU9sWdjqUuq0=",
+  "Source": "WebAuthnRegistration-ASP.NET",
+  "BasePath": "_content/WebAuthnRegistration-ASP.NET",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h1>Login & Signup</h1>
+
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <button id="loginBtn" style="margin-right: 20px; padding: 10px 15px; font-size: large; font-weight: bold; background-color: lightgray; color: black; border: none; border-radius: 10px; cursor: pointer;">Login</button>
+            <button id="signupBtn" style="padding: 10px 15px; font-size: large; font-weight: bold; background-color: lightgrey; color: black; border: none; border-radius: 10px; cursor: pointer;">Signup</button>
+        </div>
+
+        <form id="loginForm" style="display: none; margin-top: 20px; width: 220px;">
+            <label for="username" style="font-size: medium; font-weight: 600;">Username:</label><br>
+            <input type="text" id="loginUsername" name="userName" style="box-sizing: border-box; width: 100%; margin: 5px 0 15px 0; padding: 5px 10px; border-radius: 10px;"><br>
+            <!-- <label for="fingerprint">Fingerprint Key:</label><br>
+                <input type="text" id="fingerprint" name="fingerprintKey"><br><br> -->
+            <input type="submit" value="Login" style="padding: 10px 15px; font-size: medium; font-weight: bold; background-color: lightskyblue; color: white; border: none; border-radius: 10px; cursor: pointer;">
+        </form>
+
+        <form id="signupForm" style="display: none; margin-top: 20px; width: 220px;">
+            <label for="username" style="font-size: medium; font-weight: 600;">Username:</label><br>
+            <input type="text" id="signupUsername" name="userName" style="box-sizing: border-box; width: 100%; margin: 5px 0 15px 0; padding: 5px 10px; border-radius: 10px;"><br>
+            <label for="email" style="font-size: medium; font-weight: 600;">Email:</label><br>
+            <input type="email" id="email" name="email" style="box-sizing: border-box; width: 100%; margin: 5px 0 15px 0; padding: 5px 10px; border-radius: 10px;"><br>
+            <!-- <label for="fingerprint">Fingerprint Key:</label><br>
+            <input type="text" id="signupFingerprint" name="fingerprintKey"><br><br> -->
+            <input type="submit" value="Signup" style="padding: 10px 15px; font-size: medium; font-weight: bold; background-color: lightskyblue; color: white; border: none; border-radius: 10px; cursor: pointer;">
+        </form>
+
+        <div id="responseMessage" style="margin-top: 20px; font-size: large;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
