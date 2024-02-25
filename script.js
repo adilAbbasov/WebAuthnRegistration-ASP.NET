@@ -190,42 +190,46 @@ document.addEventListener('DOMContentLoaded', function ()
 
     async function confirmUserName(userName)
     {
-        return fetch(`https://localhost:7244/controller/users/${userName}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response =>
-            {
-                if (!response.ok)
-                {
-                    if (response.status === 404)
-                    {
-                        console.log("User not found.");
-                        return null;
-                    } else
-                    {
-                        console.error("Failed to fetch data. Status code:", response.status);
-                        throw new Error(`Failed to fetch data. Status code: ${response.status}`);
-                    }
+        try
+        {
+            const response = await fetch(`https://localhost:7244/controller/users/${userName}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-                return response.json();
-            })
-            .then(data =>
-            {
-                if (data !== null)
-                {
-                    console.log("Fingerprint Key:", data);
-                }
-                return data;
-            })
-            .catch(error =>
-            {
-                console.error('Error:', error);
-                throw error;
             });
+
+            if (!response.ok)
+            {
+                if (response.status === 404)
+                {
+                    console.log("User not found.");
+                    return null;
+                } else
+                {
+                    console.error("Failed to fetch data. Status code:", response.status);
+                    throw new Error(`Failed to fetch data. Status code: ${response.status}`);
+                }
+            }
+
+            const fingerprintKey = await response.text();
+
+            if (fingerprintKey !== null && fingerprintKey !== '')
+            {
+                console.log("Fingerprint Key:", fingerprintKey);
+            } else
+            {
+                console.log("Empty response received.");
+            }
+
+            return fingerprintKey;
+        } catch (error)
+        {
+            console.error('Error:', error);
+            throw error;
+        }
     }
+
 });
 
 
