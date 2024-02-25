@@ -170,16 +170,13 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.get({
                     publicKey: {
-                        authenticatorSelection: {
-                            userVerification: 'required',
-                            attachment: 'cross-platform'
-                        },
                         challenge: Uint8Array.from("MinA"),
                         rp: { name: "WebAuthnRegister" },
                         allowCredentials: [{
                             type: "public-key",
                             id: Uint8Array.from(credentialId.split('').map(char => char.charCodeAt(0)))
                         }],
+                        userVerification: 'required',
                         timeout: 60000
                     }
                 }).then(credential =>
