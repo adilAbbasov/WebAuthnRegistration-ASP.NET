@@ -131,8 +131,15 @@ document.addEventListener('DOMContentLoaded', function ()
                     publicKey: {
                         challenge: Uint8Array.from("MinA"),
                         rp: { name: "WebAuthnRegister" },
-                        user: { id: Uint8Array.from(Date.now().toString()), name: email, displayName: userName },
-                        pubKeyCredParams: [{ type: "public-key", alg: -7 }],
+                        user: {
+                            id: Uint8Array.from(Date.now().toString()),
+                            name: email,
+                            displayName: userName
+                        },
+                        pubKeyCredParams: [{
+                            type: "public-key",
+                            alg: -7
+                        }],
                         timeout: 60000
                     }
                 }).then(credential =>
@@ -163,14 +170,18 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.get({
                     publicKey: {
+                        authenticatorSelection: {
+                            userVerification: 'required',
+                            attachment: 'cross-platform'
+                        },
                         challenge: Uint8Array.from("MinA"),
                         rp: { name: "WebAuthnRegister" },
-                        // userVerification: "preferred",
-                        allowCredentials: [{ type: "public-key", id: Uint8Array.from(credentialId.split('').map(char => char.charCodeAt(0))) }]
+                        allowCredentials: [{
+                            type: "public-key",
+                            id: Uint8Array.from(credentialId.split('').map(char => char.charCodeAt(0)))
+                        }],
+                        timeout: 60000
                     }
-                    // publicKey: {
-                    //     timeout: 60000
-                    // }
                 }).then(credential =>
                 {
                     if (credential)
