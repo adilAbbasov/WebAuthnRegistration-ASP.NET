@@ -129,16 +129,11 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.create({
                     publicKey: {
-                        rp: {
-                            name: "WebAuthnRegistration"
-                        },
-                        user: {
-                            id: Date.now(),
-                            name: email,
-                            displayName: userName
-                        },
                         challenge: Uint8Array.from("MinA"),
+                        rp: { name: "WebAuthnRegister" },
+                        user: { id: Uint8Array.from(Date.now().toString()), name: email, displayName: userName },
                         pubKeyCredParams: [{ type: "public-key", alg: -7 }],
+                        timeout: 60000
                     }
                 }).then(credential =>
                 {
@@ -168,9 +163,9 @@ document.addEventListener('DOMContentLoaded', function ()
             {
                 navigator.credentials.get({
                     publicKey: {
-                        rpName: "WebAuthnRegistration",
-                        userVerification: "preferred",
                         challenge: Uint8Array.from("MinA"),
+                        rp: { name: "WebAuthnRegister" },
+                        userVerification: "preferred",
                         allowCredentials: [{ type: "public-key", id: credentialId }]
                     }
                 }).then(credential =>
@@ -195,30 +190,41 @@ document.addEventListener('DOMContentLoaded', function ()
 
     async function confirmUserName(userName)
     {
-        try
-        {
-            const response = await fetch(`https://localhost:7244/controller/users/${userName}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok)
-            {
-                const data = await response.json();
-                console.log("Fingerprint Key:", data);
-            } else if (response.status === 404)
-            {
-                console.log("User not found.");
-            } else
-            {
-                console.error("Failed to fetch data. Status code:", response.status);
+        return fetch(`https://localhost:7244/controller/users/${userName}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             }
-        } catch (error)
-        {
-            console.error('Error:', error);
-        }
+        })
+            .then(response =>
+            {
+                if (!response.ok)
+                {
+                    if (response.status === 404)
+                    {
+                        console.log("User not found.");
+                        return null;
+                    } else
+                    {
+                        console.error("Failed to fetch data. Status code:", response.status);
+                        throw new Error(`Failed to fetch data. Status code: ${response.status}`);
+                    }
+                }
+                return response.json();
+            })
+            .then(data =>
+            {
+                if (data !== null)
+                {
+                    console.log("Fingerprint Key:", data);
+                }
+                return data;
+            })
+            .catch(error =>
+            {
+                console.error('Error:', error);
+                throw error;
+            });
     }
 });
 
