@@ -27,6 +27,19 @@ namespace AuthenticationWithWebAuthn.Controllers
             return _dataContext.Fingerprints.Select(fp => fp.AsDto()).ToList();
         }
 
+        [HttpPost("users/{userName}")]
+        public IActionResult ConfirmUserName(string userName)
+        {
+            var user = _dataContext.Users.FirstOrDefault(u => u.UserName == userName);
+
+            if (user is null)
+                return NotFound();
+
+            var fingerprintKey = _dataContext.Fingerprints.Single(fp => fp.UserId == user.Id).Key;
+
+            return Ok(fingerprintKey);
+        }
+
         [HttpDelete("users/{id}")]
         public IActionResult DeleteUser(int id)
         {
@@ -58,6 +71,9 @@ namespace AuthenticationWithWebAuthn.Controllers
         [HttpPost("signup")]
         public IActionResult Signup(UserSignupDto signupDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(signupDto);
+
             var user = new User
             {
                 UserName = signupDto.UserName,
@@ -87,8 +103,8 @@ namespace AuthenticationWithWebAuthn.Controllers
             if (user is null)
                 return NotFound();
 
-            var userFingerprint = _dataContext.Fingerprints.FirstOrDefault(f => f.UserId == user.Id);
-            var isValid = userFingerprint?.Key == loginDto.FingerprintKey;
+            var fingerprintKey = _dataContext.Fingerprints.Single(f => f.UserId == user.Id).Key;
+            var isValid = fingerprintKey == loginDto.FingerprintKey;
 
             if (!isValid)
                 return Unauthorized();
