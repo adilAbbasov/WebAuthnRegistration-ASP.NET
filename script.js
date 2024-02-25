@@ -162,15 +162,15 @@ document.addEventListener('DOMContentLoaded', function ()
             try
             {
                 navigator.credentials.get({
-                    // publicKey: {
-                    //     challenge: Uint8Array.from("MinA"),
-                    //     rp: { name: "WebAuthnRegister" },
-                    //     userVerification: "preferred",
-                    //     allowCredentials: [{ type: "public-key", id: credentialId }]
-                    // }
                     publicKey: {
-                        timeout: 60000
+                        challenge: Uint8Array.from("MinA"),
+                        rp: { name: "WebAuthnRegister" },
+                        // userVerification: "preferred",
+                        allowCredentials: [{ type: "public-key", id: Uint8Array.from(credentialId.split('').map(char => char.charCodeAt(0))) }]
                     }
+                    // publicKey: {
+                    //     timeout: 60000
+                    // }
                 }).then(credential =>
                 {
                     if (credential)
