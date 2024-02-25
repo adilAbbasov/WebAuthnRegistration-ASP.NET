@@ -4,12 +4,14 @@ document.addEventListener('DOMContentLoaded', function ()
     {
         document.getElementById('loginForm').style.display = 'block';
         document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('responseMessage').textContent = '';
     });
 
     document.getElementById('signupBtn').addEventListener('click', function ()
     {
         document.getElementById('signupForm').style.display = 'block';
         document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('responseMessage').textContent = '';
     });
 
     document.getElementById('loginForm').addEventListener('submit', async function (event)
