@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function ()
 
         jsonObject["fingerprintKey"] = credential.id;
         const jsonData = JSON.stringify(jsonObject);
-        
+
         fetch('https://localhost:7244/controller/login', {
             method: 'POST',
             headers: {
@@ -191,10 +191,9 @@ document.addEventListener('DOMContentLoaded', function ()
             jsonObject[key] = value;
         });
 
+        // localStorage.setItem('credentialId', btoa(String.fromCharCode.apply(null, credential.rawId)));
+
         jsonObject["fingerprintKey"] = credential.id;
-
-        localStorage.setItem('credentialId', btoa(String.fromCharCode.apply(null, credential.rawId)));
-
         const jsonData = JSON.stringify(jsonObject);
 
         fetch('https://localhost:7244/controller/signup', {
@@ -278,12 +277,12 @@ document.addEventListener('DOMContentLoaded', function ()
                         rp: {
                             name: "WebAuthnRegister"
                         },
-                        allowCredentials: [{
-                            type: "public-key",
-                            // id: Uint8Array.from(credentialId, c => c.charCodeAt(0)),
-                            id: Uint8Array.from(atob(localStorage.getItem('credentialId')), c => c.charCodeAt(0)),
-                            transports: ["internal"]
-                        }],
+                        // allowCredentials: [{
+                        //     type: "public-key",
+                        //     // id: Uint8Array.from(credentialId, c => c.charCodeAt(0)),
+                        //     // id: Uint8Array.from(atob(localStorage.getItem('credentialId')), c => c.charCodeAt(0)),
+                        //     transports: ["internal"]
+                        // }],
                         authenticatorSelection: {
                             userVerification: 'required',
                             attachment: 'platform'
