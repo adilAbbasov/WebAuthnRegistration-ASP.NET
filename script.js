@@ -1,4 +1,22 @@
 // Function to register a user
+function base64UrlEncode(str)
+{
+    return btoa(str)
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+}
+
+function base64UrlDecode(str)
+{
+    str = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (str.length % 4 !== 0)
+    {
+        str += '=';
+    }
+    return atob(str);
+}
+
 function register()
 {
     const username = document.getElementById('username').value;
@@ -22,15 +40,15 @@ function register()
         {
             const credential = {};
             credential.id = cred.id;
-            credential.rawId = base64url.encode(cred.rawId);
+            credential.rawId = base64UrlEncode(cred.rawId);
             credential.type = cred.type;
 
             if (cred.response)
             {
                 const clientDataJSON =
-                    base64url.encode(cred.response.clientDataJSON);
+                    base64UrlEncode(cred.response.clientDataJSON);
                 const attestationObject =
-                    base64url.encode(cred.response.attestationObject);
+                    base64UrlEncode(cred.response.attestationObject);
                 credential.response = {
                     clientDataJSON,
                     attestationObject
