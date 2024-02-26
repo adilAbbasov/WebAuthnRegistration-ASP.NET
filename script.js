@@ -229,8 +229,8 @@ document.addEventListener('DOMContentLoaded', function ()
                         },
                         user: {
                             id: Uint8Array.from(Date.now().toString(), c => c.charCodeAt(0)),
-                            name: email,
-                            displayName: userName
+                            name: userName,
+                            displayName: email
                         },
                         pubKeyCredParams: [{
                             type: "public-key",
