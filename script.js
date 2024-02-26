@@ -14,6 +14,7 @@ function register()
         pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
         authenticatorSelection: { authenticatorAttachment: 'platform' },
         timeout: 60000,
+        attestation: 'direct'
     };
 
     navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions })
