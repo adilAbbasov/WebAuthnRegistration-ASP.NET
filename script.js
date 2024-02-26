@@ -138,9 +138,8 @@ document.addEventListener('DOMContentLoaded', function ()
         });
 
         jsonObject["fingerprintKey"] = credential.id;
-        localStorage.setItem('credentialId', credential.rawId);
         const jsonData = JSON.stringify(jsonObject);
-
+        
         fetch('https://localhost:7244/controller/login', {
             method: 'POST',
             headers: {
@@ -193,6 +192,9 @@ document.addEventListener('DOMContentLoaded', function ()
         });
 
         jsonObject["fingerprintKey"] = credential.id;
+        
+        localStorage.setItem('credentialId', credential.rawId);
+
         const jsonData = JSON.stringify(jsonObject);
 
         fetch('https://localhost:7244/controller/signup', {
