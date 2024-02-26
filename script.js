@@ -18,10 +18,26 @@ function register()
     };
 
     navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions })
-        .then((newCredential) =>
+        .then((cred) =>
         {
+            const credential = {};
+            credential.id = cred.id;
+            credential.rawId = base64url.encode(cred.rawId);
+            credential.type = cred.type;
+
+            if (cred.response)
+            {
+                const clientDataJSON =
+                    base64url.encode(cred.response.clientDataJSON);
+                const attestationObject =
+                    base64url.encode(cred.response.attestationObject);
+                credential.response = {
+                    clientDataJSON,
+                    attestationObject
+                };
+            }
             // Store the credential data in local storage
-            localStorage.setItem('credential', JSON.stringify(newCredential));
+            localStorage.setItem('credential', JSON.stringify(credential));
             alert('Registration successful!');
         })
         .catch((err) =>
