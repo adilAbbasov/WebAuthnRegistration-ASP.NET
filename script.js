@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function ()
         });
 
         jsonObject["fingerprintKey"] = credential.id;
+        localStorage.setItem('credentialId', credential.rawId);
         const jsonData = JSON.stringify(jsonObject);
 
         fetch('https://localhost:7244/controller/login', {
@@ -278,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function ()
                         allowCredentials: [{
                             type: "public-key",
                             // id: Uint8Array.from(credentialId, c => c.charCodeAt(0)),
-                            id: credentialId,
+                            id: Uint8Array.from(atob(localStorage.getItem('credentialId')), c => c.charCodeAt(0)),
                             transports: ["internal"]
                         }],
                         authenticatorSelection: {
