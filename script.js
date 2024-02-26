@@ -55,7 +55,7 @@ function register() {
       challenge: new Uint8Array(32), // Generate a challenge
       allowCredentials: [{
         type: credentialData.type,
-        id: credentialData.id,
+        id: Uint8Array.from(credentialData.id),
         transports: ['internal']
       }],
       timeout: 60000
