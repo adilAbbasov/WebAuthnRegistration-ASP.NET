@@ -51,12 +51,12 @@ function login()
     const publicKeyCredentialRequestOptions = {
         challenge: new Uint8Array(32), // Generate a challenge
         timeout: 60000,
-        userVerification: "required",
-        allowCredentials: [{
-            type: credentialData.type,
-            // id: Uint8Array.from(credentialData.id),
-            transports: ['internal']
-        }],
+        // userVerification: "required",
+        // allowCredentials: [{
+        //     type: credentialData.type,
+        //     // id: Uint8Array.from(credentialData.id),
+        //     transports: ['internal']
+        // }],
     };
 
     navigator.credentials.get({ publicKey: publicKeyCredentialRequestOptions })
