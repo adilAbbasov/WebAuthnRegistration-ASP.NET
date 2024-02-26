@@ -240,15 +240,6 @@ document.addEventListener('DOMContentLoaded', function ()
                             authenticatorAttachment: "platform",
                             userVerification: "required"
                         },
-                        excludeCredentials: [
-                            {
-                                id: "...",
-                                type: "public-key",
-                                transports: [
-                                    "internal"
-                                ]
-                            }
-                        ],
                         timeout: 60000,
                         attestation: "none",
                     }
