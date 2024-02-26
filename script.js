@@ -1,95 +1,3 @@
-// // Function to register a user
-// function base64UrlEncode(str)
-// {
-//     return btoa(str)
-//         .replace(/\+/g, '-')
-//         .replace(/\//g, '_')
-//         .replace(/=/g, '');
-// }
-
-// function base64UrlDecode(str)
-// {
-//     str = str.replace(/-/g, '+').replace(/_/g, '/');
-//     while (str.length % 4 !== 0)
-//     {
-//         str += '=';
-//     }
-//     return atob(str);
-// }
-
-// function register()
-// {
-//     const username = document.getElementById('username').value;
-//     if (!username)
-//     {
-//         alert('Please enter a username.');
-//         return;
-//     }
-//     const publicKeyCredentialCreationOptions = {
-//         challenge: new Uint8Array(32), // Generate a challenge
-//         rp: { name: 'Example Corp' },
-//         user: { id: new Uint8Array(16), name: username, displayName: username },
-//         pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
-//         authenticatorSelection: { authenticatorAttachment: 'platform' },
-//         timeout: 60000,
-//     };
-
-//     navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions })
-//         .then((cred) =>
-//         {
-//             localStorage.setItem('credentialId', cred.id);
-//             alert('Registration successful!');
-//         })
-//         .catch((err) =>
-//         {
-//             console.error(err);
-//             alert('Registration failed.');
-//         });
-// }
-
-// // Function to login user
-// function login()
-// {
-//     const username = document.getElementById('loginUsername').value;
-//     if (!username)
-//     {
-//         alert('Please enter a username.');
-//         return;
-//     }
-
-//     // Retrieve credential data from local storage
-//     const credentialId = localStorage.getItem('credentialId');
-//     if (!credentialId)
-//     {
-//         alert('No credential found. Please register first.');
-//         return;
-//     }
-
-//     const publicKeyCredentialRequestOptions = {
-//         challenge: new Uint8Array(32), // Generate a challenge
-//         timeout: 60000,
-//         userVerification: "required",
-//         // allowCredentials: [{
-//         //     type: 'public-key',
-//         //     id: Uint8Array.from(credentialId),
-//         //     transports: ['internal']
-//         // }],
-//     };
-
-//     navigator.credentials.get({ publicKey: publicKeyCredentialRequestOptions })
-//         .then((abc) =>
-//         {
-//             alert('Login successful!', abc);
-//         })
-//         .catch((err) =>
-//         {
-//             console.error(err);
-//             alert('Login failed.');
-//         });
-// }
-
-
-
 document.addEventListener('DOMContentLoaded', function ()
 {
     document.getElementById('loginBtn').addEventListener('click', function ()
@@ -277,17 +185,18 @@ document.addEventListener('DOMContentLoaded', function ()
                         rp: {
                             name: "WebAuthnRegister"
                         },
+
+                        authenticatorSelection: {
+                            userVerification: 'required',
+                            attachment: 'platform'
+                        },
+                        timeout: 60000
                         // allowCredentials: [{
                         //     type: "public-key",
                         //     // id: Uint8Array.from(credentialId, c => c.charCodeAt(0)),
                         //     // id: Uint8Array.from(atob(localStorage.getItem('credentialId')), c => c.charCodeAt(0)),
                         //     transports: ["internal"]
                         // }],
-                        authenticatorSelection: {
-                            userVerification: 'required',
-                            attachment: 'platform'
-                        },
-                        timeout: 60000
                     }
                 }).then(credential =>
                 {
