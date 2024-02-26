@@ -192,8 +192,8 @@ document.addEventListener('DOMContentLoaded', function ()
         });
 
         jsonObject["fingerprintKey"] = credential.id;
-        
-        localStorage.setItem('credentialId', credential.rawId);
+
+        localStorage.setItem('credentialId', btoa(String.fromCharCode.apply(null, credential.rawId)));
 
         const jsonData = JSON.stringify(jsonObject);
 
