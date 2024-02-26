@@ -275,11 +275,12 @@ document.addEventListener('DOMContentLoaded', function ()
                         rp: {
                             name: "WebAuthnRegister"
                         },
-                        // allowCredentials: [{
-                        //     type: "public-key",
-                        //     id: Uint8Array.from(credentialId, c => c.charCodeAt(0)),
-                        //     transports: ["internal"]
-                        // }],
+                        allowCredentials: [{
+                            type: "public-key",
+                            // id: Uint8Array.from(credentialId, c => c.charCodeAt(0)),
+                            id: credentialId,
+                            transports: ["internal"]
+                        }],
                         authenticatorSelection: {
                             userVerification: 'required',
                             attachment: 'platform'
