@@ -32,30 +32,12 @@ function register()
         pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
         authenticatorSelection: { authenticatorAttachment: 'platform' },
         timeout: 60000,
-        attestation: 'direct'
     };
 
     navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions })
         .then((cred) =>
         {
-            const credential = {};
-            credential.id = cred.id;
-            credential.rawId = base64UrlEncode(cred.rawId);
-            credential.type = cred.type;
-
-            if (cred.response)
-            {
-                const clientDataJSON =
-                    base64UrlEncode(cred.response.clientDataJSON);
-                const attestationObject =
-                    base64UrlEncode(cred.response.attestationObject);
-                credential.response = {
-                    clientDataJSON,
-                    attestationObject
-                };
-            }
-            // Store the credential data in local storage
-            localStorage.setItem('credential', JSON.stringify(credential));
+            localStorage.setItem('credentialId', cred.id);
             alert('Registration successful!');
         })
         .catch((err) =>
@@ -76,8 +58,8 @@ function login()
     }
 
     // Retrieve credential data from local storage
-    const credentialData = JSON.parse(localStorage.getItem('credential'));
-    if (!credentialData)
+    const credentialId = localStorage.getItem('credentialId');
+    if (!credentialId)
     {
         alert('No credential found. Please register first.');
         return;
@@ -88,9 +70,9 @@ function login()
         timeout: 60000,
         // userVerification: "required",
         allowCredentials: [{
-            type: credentialData.type,
-            id: Uint8Array.from(credentialData.id),
-            // transports: ['internal']
+            type: 'public-key',
+            id: Uint8Array.from(credentialId),
+            transports: ['internal']
         }],
     };
 
