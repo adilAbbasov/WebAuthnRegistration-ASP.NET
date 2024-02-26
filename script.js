@@ -238,9 +238,19 @@ document.addEventListener('DOMContentLoaded', function ()
                         }],
                         authenticatorSelection: {
                             authenticatorAttachment: "platform",
+                            userVerification: "required"
                         },
+                        excludeCredentials: [
+                            {
+                                id: "...",
+                                type: "public-key",
+                                transports: [
+                                    "internal"
+                                ]
+                            }
+                        ],
                         timeout: 60000,
-                        attestation: "direct"
+                        attestation: "none",
                     }
                 }).then(credential =>
                 {
@@ -271,6 +281,9 @@ document.addEventListener('DOMContentLoaded', function ()
                 navigator.credentials.get({
                     publicKey: {
                         challenge: Uint8Array.from("MinA", c => c.charCodeAt(0)),
+                        rp: {
+                            name: "WebAuthnRegister"
+                        },
                         // allowCredentials: [{
                         //     type: "public-key",
                         //     id: Uint8Array.from(credentialId, c => c.charCodeAt(0)),
