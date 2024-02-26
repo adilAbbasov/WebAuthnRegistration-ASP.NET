@@ -1,61 +1,75 @@
 // Function to register a user
 function register() {
     const username = document.getElementById('username').value;
-
-    // Check if biometric authentication is supported
-    if (!window.PublicKeyCredential) {
-        alert('Biometric authentication is not supported in this browser.');
-        return;
+    if (!username) {
+      alert('Please enter a username.');
+      return;
     }
+    const publicKeyCredentialCreationOptions = {
+      challenge: new Uint8Array(32), // Generate a challenge
+      rp: { name: 'Example Corp' },
+      user: { id: new Uint8Array(16), name: username, displayName: username },
+      pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
+      authenticatorSelection: { authenticatorAttachment: 'platform' },
+      timeout: 60000,
+      attestation: 'direct'
+    };
 
-    // Call WebAuthn to create credential
-    navigator.credentials.create({
-        publicKey: {
-            rp: { name: 'Example Corp' },
-            user: {
-                id: new TextEncoder().encode(username),
-                name: username,
-                displayName: username
-            },
-            challenge: new Uint8Array(32),
-            pubKeyCredParams: [{ type: 'public-key', alg: -7 }]
-        }
-    }).then((credential) => {
-        // Store the credential in localStorage
-        localStorage.setItem('biometricCredential', JSON.stringify(credential));
-        alert('Biometric registration successful!');
-    }).catch((error) => {
-        console.error('Registration failed:', error);
-        alert('Biometric registration failed. Please try again.');
-    });
-}
+    navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions })
+      .then((newCredential) => {
+        const credentialData = {
+          id: newCredential.id,
+          rawId: newCredential.rawId,
+          type: newCredential.type,
+          response: {
+            attestationObject: new Uint8Array(newCredential.response.attestationObject),
+            clientDataJSON: new Uint8Array(newCredential.response.clientDataJSON)
+          }
+        };
+        // Store the credential data in local storage
+        localStorage.setItem('credential', JSON.stringify(credentialData));
+        alert('Registration successful!');
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Registration failed.');
+      });
+  }
 
-// Login function
-function login() {
+  // Function to login user
+  function login() {
     const username = document.getElementById('loginUsername').value;
-
-    // Retrieve the stored credential from localStorage
-    const storedCredential = JSON.parse(localStorage.getItem('biometricCredential'));
-
-    // Check if credential exists
-    if (!storedCredential) {
-        alert('No biometric credential found. Please register first.');
-        return;
+    if (!username) {
+      alert('Please enter a username.');
+      return;
     }
 
-    // Call WebAuthn to get assertion
-    navigator.credentials.get({
-        publicKey: {
-            challenge: new Uint8Array(32),
-            allowCredentials: [storedCredential]
-        }
-    }).then(() => {
-        alert('Biometric login successful!');
-    }).catch((error) => {
-        console.error('Login failed:', error);
-        alert('Biometric login failed. Please try again.');
-    });
-}
+    // Retrieve credential data from local storage
+    const credentialData = JSON.parse(localStorage.getItem('credential'));
+    if (!credentialData) {
+      alert('No credential found. Please register first.');
+      return;
+    }
+
+    const publicKeyCredentialRequestOptions = {
+      challenge: new Uint8Array(32), // Generate a challenge
+      allowCredentials: [{
+        type: credentialData.type,
+        id: credentialData.id,
+        transports: ['internal']
+      }],
+      timeout: 60000
+    };
+
+    navigator.credentials.get({ publicKey: publicKeyCredentialRequestOptions })
+      .then(() => {
+        alert('Login successful!');
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Login failed.');
+      });
+  }
   
 
 
