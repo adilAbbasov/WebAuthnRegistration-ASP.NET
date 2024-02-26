@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function ()
                             alg: -7
                         }],
                         authenticatorSelection: {
-                            authenticatorAttachment: "cross-platform",
+                            authenticatorAttachment: "platform",
                         },
                         timeout: 60000,
                         attestation: "direct"
