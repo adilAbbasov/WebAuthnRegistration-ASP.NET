@@ -77,9 +77,9 @@ function login()
     };
 
     navigator.credentials.get({ publicKey: publicKeyCredentialRequestOptions })
-        .then(() =>
+        .then((cred) =>
         {
-            alert('Login successful!');
+            alert('Login successful!', cred);
         })
         .catch((err) =>
         {
