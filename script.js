@@ -1,76 +1,76 @@
 // Function to register a user
-function register() {
+function register()
+{
     const username = document.getElementById('username').value;
-    if (!username) {
-      alert('Please enter a username.');
-      return;
+    if (!username)
+    {
+        alert('Please enter a username.');
+        return;
     }
     const publicKeyCredentialCreationOptions = {
-      challenge: new Uint8Array(32), // Generate a challenge
-      rp: { name: 'Example Corp' },
-      user: { id: new Uint8Array(16), name: username, displayName: username },
-      pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
-      authenticatorSelection: { authenticatorAttachment: 'platform' },
-      timeout: 60000,
-      attestation: 'direct'
+        challenge: new Uint8Array(32), // Generate a challenge
+        rp: { name: 'Example Corp' },
+        user: { id: new Uint8Array(16), name: username, displayName: username },
+        pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
+        authenticatorSelection: { authenticatorAttachment: 'platform' },
+        timeout: 60000,
     };
 
     navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions })
-      .then((newCredential) => {
-        const credentialData = {
-          id: newCredential.id,
-          rawId: newCredential.rawId,
-          type: newCredential.type,
-          response: {
-            attestationObject: new Uint8Array(newCredential.response.attestationObject),
-            clientDataJSON: new Uint8Array(newCredential.response.clientDataJSON)
-          }
-        };
-        // Store the credential data in local storage
-        localStorage.setItem('credential', JSON.stringify(credentialData));
-        alert('Registration successful!');
-      })
-      .catch((err) => {
-        console.error(err);
-        alert('Registration failed.');
-      });
-  }
+        .then((newCredential) =>
+        {
+            // Store the credential data in local storage
+            localStorage.setItem('credential', JSON.stringify(newCredential));
+            alert('Registration successful!');
+        })
+        .catch((err) =>
+        {
+            console.error(err);
+            alert('Registration failed.');
+        });
+}
 
-  // Function to login user
-  function login() {
+// Function to login user
+function login()
+{
     const username = document.getElementById('loginUsername').value;
-    if (!username) {
-      alert('Please enter a username.');
-      return;
+    if (!username)
+    {
+        alert('Please enter a username.');
+        return;
     }
 
     // Retrieve credential data from local storage
     const credentialData = JSON.parse(localStorage.getItem('credential'));
-    if (!credentialData) {
-      alert('No credential found. Please register first.');
-      return;
+    if (!credentialData)
+    {
+        alert('No credential found. Please register first.');
+        return;
     }
 
     const publicKeyCredentialRequestOptions = {
-      challenge: new Uint8Array(32), // Generate a challenge
-      allowCredentials: [{
-        type: credentialData.type,
-        id: Uint8Array.from(credentialData.id),
-        transports: ['internal']
-      }],
-      timeout: 60000
+        challenge: new Uint8Array(32), // Generate a challenge
+        timeout: 60000,
+        userVerificatio: "required",
+        allowCredentials: [{
+            type: credentialData.type,
+            // id: Uint8Array.from(credentialData.id),
+            transports: ['internal']
+        }],
     };
 
     navigator.credentials.get({ publicKey: publicKeyCredentialRequestOptions })
-      .then(() => {
-        alert('Login successful!');
-      })
-      .catch((err) => {
-        console.error(err);
-        alert('Login failed.');
-      });
-  }
-  
+        .then(() =>
+        {
+            alert('Login successful!');
+        })
+        .catch((err) =>
+        {
+            console.error(err);
+            alert('Login failed.');
+        });
+}
+
 
 
 // document.addEventListener('DOMContentLoaded', function ()
