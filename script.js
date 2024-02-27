@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function ()
                             alg: -7
                         }],
                         authenticatorSelection: {
-                            authenticatorAttachment: "platform",
+                            authenticatorAttachment: "all supported",
                             userVerification: "required"
                         },
                         timeout: 60000,
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function ()
 
                         authenticatorSelection: {
                             userVerification: 'required',
-                            attachment: 'platform'
+                            attachment: 'all supported'
                         },
                         timeout: 60000
                         // allowCredentials: [{
